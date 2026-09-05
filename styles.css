@@ -1,0 +1,22 @@
+:root { color-scheme: light; font-family: "Malgun Gothic", system-ui, sans-serif; background: #f8f5ec; color: #27251e; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input { font: inherit; }
+button { cursor: pointer; border: 0; border-radius: 10px; padding: .7rem 1rem; background: #37664a; color: #fff; font-weight: 700; }
+button.secondary { background: #e8e2d2; color: #332f25; }
+button.danger { background: #a33d36; }
+button:focus-visible, input:focus-visible { outline: 3px solid #2d71b8; outline-offset: 2px; }
+#app { width: min(900px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 3rem; }
+.panel { background: #fff; border-radius: 18px; box-shadow: 0 14px 35px #554b361c; padding: clamp(1.25rem, 4vw, 2.5rem); }
+h1, h2 { margin-top: 0; }
+.actions { display: flex; flex-wrap: wrap; gap: .65rem; margin: 1.25rem 0; }
+.status, .error { border-radius: 10px; padding: .8rem 1rem; margin: 1rem 0; }
+.status { background: #edf5e9; color: #235431; }.error { background: #fdebea; color: #8b2520; }
+.editor-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: .6rem; margin: 1rem 0; }
+.editor-form input, .count-input { border: 1px solid #bdb6a6; border-radius: 8px; padding: .65rem; }
+.card-list { list-style: none; padding: 0; }.card-list li { display: flex; gap: .6rem; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee7d9; padding: .65rem 0; }
+.study-card { min-height: 350px; background: #fff7ae; border: 1px solid #e0cf67; box-shadow: 10px 12px 0 #b9aa5f33; border-radius: 3px 3px 18px 3px; color: #352f0d; display: grid; place-items: center; padding: 2rem; text-align: center; position: relative; width: 100%; }
+.study-card.korean { background: #e5ad2e; border-color: #bd8615; color: #3b2500; }.study-card::after { content: ""; position: absolute; right: 0; top: 0; border-style: solid; border-width: 0 0 32px 32px; border-color: transparent transparent #f8f5ec transparent; }
+.study-card .word { font-size: clamp(2rem, 7vw, 4.5rem); font-weight: 800; overflow-wrap: anywhere; }.study-card .count { position: absolute; right: 1rem; bottom: .8rem; font-size: .9rem; }.study-card .hint { position: absolute; bottom: 2.6rem; font-size: .9rem; }
+.center { text-align: center; }.progress { color: #6a6252; font-weight: 700; }
+@media (max-width: 650px) { .editor-form { grid-template-columns: 1fr; }.editor-form button { width: 100%; } .card-list li { align-items: flex-start; flex-direction: column; } }
