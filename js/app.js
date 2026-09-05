@@ -9,6 +9,10 @@ export function applyProgressImport(cards, importedProgress) {
   return reconcileProgress(cards, importedProgress);
 }
 
+export function hasExplicitAction(action) {
+  return typeof action === "string" && action.trim().length > 0;
+}
+
 if (typeof document !== "undefined") {
   startBrowserApp();
 }
@@ -86,7 +90,7 @@ function startBrowserApp() {
     if (action === "import-wordbook") return wordbookInput.click(); if (action === "import-progress") return progressInput.click(); if (action === "editor") screen = "editor"; else if (action === "setup") screen = "setup"; else if (action === "home") { screen = "home"; sessionCards = []; } else if (action === "export-progress") download(progressFilenameFor(state.wordbookName), serializeProgress(state.progress)); else if (action === "export-wordbook") download(state.wordbookName, serializeWordbook(state.cards)); else if (action === "start-study") { try { const count = Number(document.querySelector("#study-count").value); sessionCards = selectSessionCards(state.cards, state.progress, count, Math.random); sessionIndex = 0; screen = "study"; } catch (cause) { setError(cause.message); } } else if (action === "card-click") { const result = clickStudyCard(sessionCards[sessionIndex], state.progress); if (result.action === "next") { sessionIndex += 1; if (sessionIndex >= sessionCards.length) screen = "complete"; } persist(); }
     render();
   }
-  root.addEventListener("click", (event) => { const target = event.target.closest("button"); if (!target) return; if (target.dataset.select) { selectedId = target.dataset.select; screen = "editor"; render(); return; } if (target.dataset.delete) { state.cards = state.cards.filter((card) => card.id !== target.dataset.delete); state.progress = reconcileProgress(state.cards, state.progress); selectedId = null; persist(); setMessage("단어를 삭제했습니다."); screen = "editor"; render(); return; } handleAction(target.dataset.action); });
+  root.addEventListener("click", (event) => { const target = event.target.closest("button"); if (!target) return; if (target.dataset.select) { selectedId = target.dataset.select; screen = "editor"; render(); return; } if (target.dataset.delete) { state.cards = state.cards.filter((card) => card.id !== target.dataset.delete); state.progress = reconcileProgress(state.cards, state.progress); selectedId = null; persist(); setMessage("단어를 삭제했습니다."); screen = "editor"; render(); return; } if (!hasExplicitAction(target.dataset.action)) return; handleAction(target.dataset.action); });
   wordbookInput.addEventListener("change", () => { const [file] = wordbookInput.files; if (file) importWordbook(file); wordbookInput.value = ""; });
   progressInput.addEventListener("change", () => { const [file] = progressInput.files; if (file) importProgress(file); progressInput.value = ""; });
   render();

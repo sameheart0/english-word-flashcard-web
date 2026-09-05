@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { applyProgressImport } from "../js/app.js";
+import { applyProgressImport, hasExplicitAction } from "../js/app.js";
 
 const cards = [
   { id: "card-1", english: "serendipity", korean: "뜻밖의 행운" },
@@ -14,4 +14,10 @@ test("reconciles imported progress to IDs in the active wordbook", () => {
 
 test("rejects progress import without an active wordbook", () => {
   assert.throws(() => applyProgressImport(null, { "card-1": 4 }), /Load a wordbook before importing progress/);
+});
+
+test("leaves a form submit button without an app action to native form handling", () => {
+  assert.equal(hasExplicitAction(undefined), false);
+  assert.equal(hasExplicitAction(""), false);
+  assert.equal(hasExplicitAction("export-wordbook"), true);
 });
